@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS FLOW</title>
+    <script>
+    window.onload = function () {
+        let count = 3
+        let isBorder = false
+        let eleInline = ['a', 'img', 'span']
+        init()
+        document.onclick = function (e) {
+            // console.log(e)
+            // document.getElementById("el" + count).style.display="block"
+            transitionTop(e)
+
+            setTimeout( function () {
+                transitionLeft(e)
+            }, 2100) 
+        }
+
+        document.onkeydown = function (e) {
+            e = e || window.event;
+            e.preventDefault();
+            // console.log(e.which)
+            switch (e.which) {
+                case 37:    
+                case 38:    preStep()
+                            break
+                case 32:
+                case 39:    
+                case 40:    nextStep()
+                            break
+                // case 46:    screenClear()
+                default:    break
+            }
+        }
+        document.getElementById('el19').onclick = function () {
+            if (isBorder) {
+                document.querySelectorAll('[class~=forExercise]').forEach(item => {
+                    if (isInline(item.localName) == 'block') {
+                        item.className = 'forExercise'
+                    } else {
+                        item.className = 'forExercise'
+                    }
+                })
+            } else {
+                document.querySelectorAll('[class=forExercise]').forEach(item => {
+                    if (isInline(item.localName) == 'block') {
+                        item.className = 'forExercise blockBorder'
+                    } else {
+                        item.className = 'forExercise inlineBorder'
+                    }
+                })
+            }
+            isBorder = !isBorder
+        }
+        document.getElementById('el34').onclick = function (e) {
+            e.srcElement.className = "no-move spec-span inlineBorder"
+        }
+        document.getElementById('el36').onclick = function (e) {
+            e.srcElement.style.margin = "500px 0px 0px"
+            e.srcElement.innerHTML = "感谢同学们，感谢各位领导和同仁，下课"
+        }
+        function screenClear () {
+            // console.log(document.querySelectorAll('[style]'))
+            // document.querySelectorAll('[style]').forEach(item => {
+            //     item.style.display = "none"
+            // })
+        }
+        function transitionTop(e) {
+            e.srcElement.style.transition = 'top 2s'
+            e.srcElement.style.top = '0px'
+        }
+        function transitionLeft(e) {
+            e.srcElement.style.transition = 'left 2s'
+            e.srcElement.style.left = '0px'
+        }
+        function nextStep (e) {
+            try {
+                let content = document.getElementById("el" + count)
+                content.style.display = isInline(content.localName)
+                if (content.offsetLeft - 8 != 0 ) {
+                    content.style.left = 8 - content.offsetLeft + "px"
+                }
+                count++
+            } catch (error) {
+                console.log(count)
+            }    
+        }
+        function isInline (tag) {
+            return eleInline.indexOf(tag) == -1 ? 'block' : 'inline-block'
+        }
+        function preStep (tag) {
+            if (count >= 2) {
+                count--
+                document.getElementById("el" + count).style.display="none"
+            }
+        }
+        function init() {
+            console.log('start')
+            document.getElementById("el1").style.display="block"
+            document.getElementById("el2").style.display="block"
+            document.body.style.height = "5000px"
+            // document.documentElement.clientHeight
+        }
+    }
+
+    </script>
+    <style>
+    h1,h2,h3,h4,div,span,p,hr,a,img {
+        display: none;
+    }
+    html,body {
+        display: block;
+    }
+    div, span {
+        position: relative;
+        top:300px;
+        left: 0px;
+    }
+    .normal-div {
+        width: 100px;
+        height: 100px;
+        margin-bottom: -2px;
+        line-height: 100px;
+    }
+    .normal-span {
+        width: 100px;
+        height: 50px;
+        font-size: 14px;
+        line-height: 50px;
+    }
+    .normal-div, .normal-span {
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+    .spec-span {
+        font-size: 14px;
+        line-height: 50px;
+        display: inline;
+        line-height: initial;
+    }
+    .no-move {
+        top: 0px;
+    }
+    .color1 {
+        color: #112f41;
+        
+    }
+    .bg-color1 {
+        background-color: #112f41
+    }
+    .color2 {
+        color: #068587;
+    }
+    .bg-color2 {
+        background-color: #068587
+    }
+    .color3 {
+        color: #4fb99f;
+    }
+    .bg-color3 {
+        background-color: #4fb99f
+    }
+    .color4 {
+        color: #f2b134;
+    }
+    .bg-color4 {
+        background-color: #f2b134
+    }
+    .color5 {
+        color: #ed553b;
+    }
+    .bg-color5 {
+        background-color: #ed553b;
+    }
+    .forExercise {
+        position: relative;
+        top: 300px;
+    }
+    .blockBorder {
+        border: 5px solid #068587;
+    }
+    .inlineBorder {
+        border: 5px solid #f2b134;
+    }
+    .lounge-page {
+        font: small/1.6em Verdana, Helvetica, Arial, sans-serif;
+        top: 0px;
+    }
+    
+    .lounge-page *{
+        display:  block !important;
+    }
+
+    .lounge-page h1, .lounge-page h2 {
+        color: #007e7e;
+    }
+
+    .lounge-page div,.lounge-page span {
+        top: 0px;
+        left: 0px;
+    }
+
+    .lounge-page span,.lounge-page img,.lounge-page a {
+        display: inline !important
+    }
+
+    .lounge-page h1 {
+        font-size: 150%;
+    }
+
+    .lounge-page h2 {
+        font-size: 130%;
+    }
+    
+    .lounge-page li {
+        display: list-item !important;
+    }
+
+    #guarantee {
+        line-height: 1.9em;
+        font-style: italic;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        color: #444444;
+        border: 1px dashed white;
+        background-color: #a7cece;
+        padding: 25px;
+        padding-left: 80px;
+        margin: 30px;
+        margin-right: 250px;
+        background-image: url("images/background.gif");
+        background-repeat: no-repeat;
+        background-position: top left;
+    }
+
+    #elixirs {
+        border: thin solid #007e7e;
+        width: 200px;
+        padding: 0px 20px 20px 20px;
+        margin-left: 20px;
+        text-align: center;
+        background-image: url("images/cocktail.gif");
+        background-repeat: repeat-x;
+        line-height: 1;
+    }
+    .important-text {
+        font-size: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+    #elixirs h2 {
+        color: black;
+    }
+
+    #elixirs h3 {
+        color: #d12c47;
+    }
+
+    #footer {
+        font-size: 50%;
+        text-align: center;
+        line-height: normal;
+        margin-top: 30px;
+    }
+
+    .cd {
+        font-style: italic;
+    }
+
+    .artist {
+        font-weight: bold;
+    }
+
+    .lounge-page a:link {
+        color: #007e7e;
+    }
+
+    .lounge-page a:visited {
+        color: #333333;
+    }
+
+    .lounge-page #elixirs a:link {
+        color: #007e7e;
+    }
+
+    .lounge-page #elixirs a:visited {
+        color: #333333;
+    }
+
+    .lounge-page #elixirs a:hover {
+        background: #f88396;
+        color: #0d5353;
+    }
+    </style>
+</head>
+<body>
+    <h1 id="el1">第11章 第1节 CSS 中的流式定位</h1>
+    <hr id="el2">
+    <h3 id="el3">一、什么是Flow？<br><br>
+        1、观察元素在页面中的流动</h3>
+    <div id='el4' class="bg-color3 normal-div">div</div>
+    <div id='el5' class="bg-color2 normal-div">div</div><span id='el6' class="bg-color4 normal-span">span</span><span id='el7' class="bg-color5 normal-span">span</span><span id='el8' class="bg-color4 normal-span">span</span>
+    <div id='el9' class="bg-color3 normal-div">div</div>
+    <h3 id='el10'>2、总结元素流动的特点</h3>
+    <p id="el11">
+        （1）流动（Flow）是默认的网页布局模式，是学习一切其他布局的基础。<br>
+        （2）块元素都会在所处的包含元素内自上而下按顺序垂直延伸分布。<br>
+        （3）行元素（内联元素）都会在所处的包含元素内从左到右水平分布显示<br>
+        （4）行元素（内联元素）一旦排满一行，则自动换行显示<br>
+    </p>
+    <hr id="el12">
+    <h3 id="el13">二、扮演浏览器<br><br>
+        1、让我来排版
+    </h3>
+    <span id='el14' class="bg-color5 normal-span">行元素</span><span id='el15' class="bg-color4 normal-span">行元素</span>
+    <div id='el16' class="bg-color2 normal-div">块元素</div><span id='el17' class="bg-color4 normal-span">行元素</span>
+    <div id='el18' class="bg-color3 normal-div">块元素</div>
+    <h3 id="el19">
+        2、识记常见的块元素和行元素
+    </h3>
+    <a id="el20" class="forExercise" href="#el19">显然这是超链接</a>
+    <a id="el21" class="forExercise" href="#el19">这是超链接2号</a>
+    <h4 id="el22" class="forExercise">这是一行标题文字h4</h4>
+    <p id="el23" class="forExercise">
+        这里是p标签中的一段话，请根据演示情况判断p标签是块元素还是行元素。
+    </p>
+    <a id="el24" class="forExercise" href="#el19">这是超链接3号</a>
+    <img id="el25" class="forExercise" src="images/panda1.jpg" width="150px">
+    <img id="el26" class="forExercise" src="images/panda2.jpg" width="150px">
+    <h4 id="el27">!!请注意两个细节!!：<br>
+        （1）块元素的边界与直觉感受有区别<br>
+        （2）行元素的height与同一行中最高的元素保持一致
+    </h4>
+    <hr id="el28">
+    <h3 id="el29">三、只一小步页面大变样<br><br>
+        1、让元素脱离默认流
+    </h3>
+    <div id="el30" class="lounge-page">
+        <p><img src="images/logo.gif" alt="Head First Lounge"></p>
+        <div id="elixirs">
+            <h2>Weekly Elixir Specials</h2>
+            <p>
+                <img src="images/yellow.gif" alt="Lemon Breeze Elixir">
+            </p>
+            <h3>Lemon Breeze</h3>
+            <p>
+                The ultimate healthy drink, this elixir combines
+                herbal botanicals, minerals, and vitamins with
+                a twist of lemon into a smooth citrus wonder
+                that will keep your immune system going all
+                day and all night.
+            </p>
+
+            <p>
+                <img src="images/chai.gif" alt="Chai Chiller Elixir">
+            </p>
+            <h3>Chai Chiller</h3>
+            <p>
+                Not your traditional chai, this elixir mixes mat&eacute;
+                with chai spices and adds an extra chocolate kick for
+                a caffeinated taste sensation on ice.
+            </p>
+
+            <p>
+                <img src="images/black.gif" alt="Black Brain Brew Elixir">
+            </p>
+            <h3>Black Brain Brew</h3>
+            <p>
+                Want to boost your memory?  Try our Black Brain Brew
+                elixir, made with black oolong tea and just a touch
+                of espresso.  Your brain will thank you for the boost.
+            </p>
+
+            <p>
+                Join us any evening for these and all our 
+                other wonderful 
+                <a href="beverages/elixir.html" 
+                title="Head First Lounge Elixirs">elixirs</a>.
+            </p>
+        </div>
+
+        <h1>Welcome to the Head First Lounge</h1>
+        <p>
+        The Head First Lounge is, no doubt, the biggest trendsetter in Webville. 
+        Stop in to sample the eclectic offering of elixirs, teas, and coffees,
+        or, stay a bit longer and enjoy the multicultural culinary menu that 
+        combines a harmony of taste, texture, and color with the best in fresh
+        and healthy ingredients.  
+        </p>
+
+        <p>
+        During your stay at the lounge, you'll enjoy a smooth mixture of 
+        ambient and mystic sounds, filling the lounge and adding an extra dimension 
+        to your dining experience. The decor surrounds you with the relaxing sentiments 
+        of sights from eras past. And, don't forget, the lounge offers free wireless 
+        access to the Internet, so bring your laptop.  
+        </p>
+
+        <p id="guarantee">
+        Our guarantee: at the lounge, we're committed to providing you, 
+        our guest, with an exceptional experience every time you visit. 
+        Whether you're just stopping by to check in on email over an 
+        elixir, or are here for an out-of-the-ordinary dinner, you'll 
+        find our knowledgeable service staff pay attention to every detail. 
+        If you're not fully satisfied, have a Blueberry Bliss Elixir on us.
+        </p>
+
+        <p>
+        But that's not all; at night, join us in the backroom as our resident 
+        DJ spins a choice selection of trance and drum&amp;bass beats across 
+        our spacious tiki-themed dance floor. Or just hang out in one of our 
+        comfy white vinyl booths at the dance bar. You can have your elixirs 
+        delivered from the main lounge right to the dance floor. If you've 
+        had enough of the beat, just head back to the lounge area to relax.
+        And, no matter where you find yourself in the lounge, you'll always be 
+        connected with our wireless Internet access.
+        </p>
+
+        <p>
+        Now that you've experienced the lounge virtually, isn't 
+        it time to check us out for real? We're located right
+        in the heart of Webville, and we've created some 
+        <a href="about/directions.html"
+            title="Detailed Directions to the Lounge">detailed directions</a>	
+        to get you here in record time. No reservations necessary; 
+        come and join us anytime.
+        </p>
+
+        <h2>What's playing at the Lounge</h2>
+        <p>
+        We're frequently asked about the music we play at the lounge, and no wonder, 
+        it's great stuff. Just for you, we keep a list here on the site, updated weekly. 
+        Enjoy.
+        </p>
+        <ul>
+        <li><span class="cd">Buddha Bar</span>, <span class="artist">Claude Challe</span></li>
+        <li><span class="cd">When It Falls</span>, <span class="artist">Zero 7</span></li>
+        <li><span class="cd">Earth 7</span>, <span class="artist">L.T.J. Bukem</span></li>
+        <li><span class="cd">Le Roi Est Mort, Vive Le Roi!</span>, <span class="artist">Enigma</span></li>
+        <li><span class="cd">Music for Airports</span>, <span class="artist">Brian Eno</span></li>
+        </ul>
+
+        <div id="footer">
+        <small>
+            &copy; 2012, Head First Lounge<br>
+            All trademarks and registered trademarks appearing on this site are 
+            the property of their respective owners.
+        </small>
+        </div>
+    </div>
+    <div id="el31" class="important-text no-move" style="margin: 200px 0px;">
+        float: right;<br>
+        浮动定位: 向右浮动
+    </div>
+    <h3 id="el32">2、默认流以外的另一条流</h3>
+    <p id="el33" class="no-move">
+        (1) float 不再支撑父元素的高度<br>
+        (2) float 并没有完全脱离默认流<br>                                
+        (3) float 的元素会自动加上一个块级框<br>
+        (4) float 的起始位置是相对的
+    </p>
+    <hr id="el35">
+    <span id="el34" class="no-move">span</span>
+    <h4 id="el36" class="no-move important-text">课后作业<br>(1) 改造lounge.html,并将更新上传github<br>（2）复现float后的新特性，为下次课做预习</h4>
+
+</body>
+</html>
+
